@@ -3,7 +3,7 @@
  * given a set of coins, how many ways can you make change for a target amount?
  *
  * @author Zach Blick
- * @author [YOUR NAME HERE]
+ * @author Zoe Sun
  */
 
 public class MakingChange {
@@ -13,12 +13,12 @@ public class MakingChange {
      */
     public static long countWays(int target, int[] coins) {
         int n = coins.length;
-        int dp[] = new int[n + 1];
+        int[] dp = new int[target + 1];
         dp[0] = 0; // 0 ways to make 0 cents
 
         for (int coin : coins) {
             for (int i = 1; i <= target; i++) {
-                dp[i] = dp[i - coin] + 1;
+                if (i - coin >= 0 && i - coin < target) dp[i] += dp[i - coin] + 1;
             }
         }
 
