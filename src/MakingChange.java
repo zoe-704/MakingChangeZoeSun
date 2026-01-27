@@ -12,13 +12,12 @@ public class MakingChange {
      *  for any given total with any given set of coins.
      */
     public static long countWays(int target, int[] coins) {
-        int n = coins.length;
-        int[] dp = new int[target + 1];
-        dp[0] = 0; // 0 ways to make 0 cents
+        long[] dp = new long[target + 1];
+        dp[0] = 1; // 1 way to make 0 cents
 
         for (int coin : coins) {
             for (int i = 1; i <= target; i++) {
-                if (i - coin >= 0 && i - coin < target) dp[i] += dp[i - coin] + 1;
+                if (i - coin >= 0 && i - coin < target) dp[i] += dp[i - coin];
             }
         }
 
