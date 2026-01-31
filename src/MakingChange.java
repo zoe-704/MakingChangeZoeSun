@@ -12,14 +12,17 @@ public class MakingChange {
     public static long countWays(int target, int[] coins) {
         int n = coins.length;
         Arrays.sort(coins);
-        int[][] arr = new int[n][target];
-        for (int i = 0; i < target; i++) {
-            for (int j = 0; j < n; j++) {
-                if (j - 1 >= 0) arr[i][j] += arr[i][j-1];
-                if (i - coins[j] >= 0) arr[i][j] += arr[i - coins[j]][i];
+
+        int[][] dp = new int[n][target+1];
+        for (int i = 0; i < n; i++) dp[i][0] = 1;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 1; j <= target; j++) {
+                if (i-1 >= 0) dp[i][j] += dp[i-1][j];
+                if (j-coins[i] >= 0) dp[i][j] += dp[i][j-coins[i]];
             }
         }
-        return arr[n-1][target-1];
+        return dp[n-1][target-1];
 
         /*
         int n = coins.length;
