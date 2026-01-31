@@ -11,18 +11,20 @@ import java.util.Arrays;
 public class MakingChange {
     public static long countWays(int target, int[] coins) {
         int n = coins.length;
-        Arrays.sort(coins);
+        long[][] dp = new long[n][target+1]; // table to store calculations from tabulation
+        Arrays.sort(coins); // sorting coins makes code faster
 
-        int[][] dp = new int[n][target+1];
+        // base case when amount is 0
         for (int i = 0; i < n; i++) dp[i][0] = 1;
 
+        // iterate through each coin and amount of money
         for (int i = 0; i < n; i++) {
             for (int j = 1; j <= target; j++) {
-                if (i-1 >= 0) dp[i][j] += dp[i-1][j];
-                if (j-coins[i] >= 0) dp[i][j] += dp[i][j-coins[i]];
+                if (i-1 >= 0) dp[i][j] += dp[i-1][j]; // don't use coin i
+                if (j-coins[i] >= 0) dp[i][j] += dp[i][j-coins[i]]; // use coin i
             }
         }
-        return dp[n-1][target-1];
+        return dp[n-1][target]; // number of ways to make target with all coins
 
         /*
         int n = coins.length;
